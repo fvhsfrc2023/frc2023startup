@@ -5,14 +5,14 @@ import java.util.function.Supplier;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import frc.robot.subsystems.TankDriveSystem;
+import frc.robot.subsystems.DriveSystem;
 
 public class TeleopDrive extends CommandBase {
-    private final TankDriveSystem m_DriverSystem;
+    private final DriveSystem m_DriverSystem;
     private final Supplier<Double> getSpeed;
     private final Supplier<Double> getOffset;
 
-    public TeleopDrive(TankDriveSystem driverSystem, Supplier<Double> getSpeed, Supplier<Double> getOffset) {
+    public TeleopDrive(DriveSystem driverSystem, Supplier<Double> getSpeed, Supplier<Double> getOffset) {
         this.m_DriverSystem = driverSystem;
         this.getSpeed = getSpeed;
         this.getOffset = getOffset;
