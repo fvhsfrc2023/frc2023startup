@@ -65,12 +65,12 @@ public class TankDriveSystem extends SubsystemBase {
     }
 
     public void drive(double speed, double offset) {
-        double left_speed = offset + speed;
-        double right_speed = -offset + speed;
+        double left_speed_coef = offset < 0 ? 1 - offset * -1 : 1;
+        double right_speed_coef = offset > 0 ? 1 - offset * 1 : 1;
 
-        m_FrontLeftMotor.set(left_speed);
-        m_RearLeftMotor.set(left_speed);
-        m_FrontRightMotor.set(right_speed);
-        m_RearRightMotor.set(right_speed);
+        m_FrontLeftMotor.set(speed * left_speed_coef);
+        m_RearLeftMotor.set(speed * left_speed_coef);
+        m_FrontRightMotor.set(speed * right_speed_coef);
+        m_RearRightMotor.set(speed * right_speed_coef);
     }
 }
