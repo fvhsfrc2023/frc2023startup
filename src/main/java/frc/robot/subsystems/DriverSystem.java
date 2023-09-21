@@ -1,10 +1,11 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import frc.robot.Constants.Motors;;
+import frc.robot.Constants;
 
-public class DriverSystem {
+public class DriverSystem extends SubsystemBase {
     private final PWMSparkMax m_FrontLeftMotor;
     private final PWMSparkMax m_FrontRightMotor;
     private final PWMSparkMax m_RearLeftMotor;
@@ -21,10 +22,10 @@ public class DriverSystem {
 
     public DriverSystem() {
         this(
-            new PWMSparkMax(Motors.kFrontLeftChannel), Motors.kFrontLeftInverted,
-            new PWMSparkMax(Motors.kFrontRightChannel), Motors.kFrontRightInverted,
-            new PWMSparkMax(Motors.kRearLeftChannel), Motors.kRearLeftInverted,
-            new PWMSparkMax(Motors.kRearRightChannel), Motors.kRearRightInverted
+            new PWMSparkMax(Constants.Motors.kFrontLeftChannel), Constants.Motors.bFrontLeftInverted,
+            new PWMSparkMax(Constants.Motors.kFrontRightChannel), Constants.Motors.bFrontRightInverted,
+            new PWMSparkMax(Constants.Motors.kRearLeftChannel), Constants.Motors.bRearLeftInverted,
+            new PWMSparkMax(Constants.Motors.kRearRightChannel), Constants.Motors.bRearRightInverted
         );
     }
     
@@ -44,6 +45,10 @@ public class DriverSystem {
         m_RearRightMotor.setInverted(rrinvert);
     }
 
+    @Override
+    public void periodic() {
+    }
+
     public PWMSparkMax getMotor(MotorPlace mp) {
         switch (mp) {
             case FrontLeft:
@@ -59,7 +64,13 @@ public class DriverSystem {
         }
     }
 
-    public void drive(double forward, double offset) {
+    public void drive(double speed, double offset) {
+        double left_speed = offset + speed;
+        double right_speed = -offset + speed;
 
+        m_FrontLeftMotor.set(left_speed);
+        m_RearLeftMotor.set(left_speed);
+        m_FrontRightMotor.set(right_speed);
+        m_RearRightMotor.set(right_speed);
     }
 }
