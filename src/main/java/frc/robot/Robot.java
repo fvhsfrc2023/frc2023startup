@@ -8,12 +8,12 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
-import frc.robot.subsystems.DriverSystem;
+import frc.robot.subsystems.TankDriveSystem;
 import frc.robot.commands.teleop.TeleopDrive;
 
 /** This is a demo program showing how to use Mecanum control with the MecanumDrive class. */
 public class Robot extends TimedRobot {
-  private final DriverSystem m_DriverSystem = new DriverSystem();
+  private final TankDriveSystem m_DriverSystem = new TankDriveSystem();
   private final Controller m_Controller = new Controller();
 
   @Override
@@ -53,9 +53,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-    m_DriverSystem.getMotor(DriverSystem.MotorPlace.RearLeft).set(0.2);
-    m_DriverSystem.getMotor(DriverSystem.MotorPlace.RearRight).set(0.2);
-    m_DriverSystem.getMotor(DriverSystem.MotorPlace.FrontLeft).set(0.2);
-    m_DriverSystem.getMotor(DriverSystem.MotorPlace.FrontRight).set(0.2);
+    m_DriverSystem.getMotor(TankDriveSystem.MotorPlace.RearLeft).set(0.2);
+    m_DriverSystem.getMotor(TankDriveSystem.MotorPlace.RearRight).set(0.2);
+    m_DriverSystem.getMotor(TankDriveSystem.MotorPlace.FrontLeft).set(0.2);
+    m_DriverSystem.getMotor(TankDriveSystem.MotorPlace.FrontRight).set(0.2);
   }
 }

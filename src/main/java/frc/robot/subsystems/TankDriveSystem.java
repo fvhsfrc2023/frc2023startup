@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
 
-public class DriverSystem extends SubsystemBase {
+public class TankDriveSystem extends SubsystemBase {
     private final PWMSparkMax m_FrontLeftMotor;
     private final PWMSparkMax m_FrontRightMotor;
     private final PWMSparkMax m_RearLeftMotor;
@@ -20,7 +20,7 @@ public class DriverSystem extends SubsystemBase {
     }
 
 
-    public DriverSystem() {
+    public TankDriveSystem() {
         this(
             new PWMSparkMax(Constants.Motors.kFrontLeftChannel), Constants.Motors.bFrontLeftInverted,
             new PWMSparkMax(Constants.Motors.kFrontRightChannel), Constants.Motors.bFrontRightInverted,
@@ -29,7 +29,7 @@ public class DriverSystem extends SubsystemBase {
         );
     }
     
-    public DriverSystem(PWMSparkMax frontLeft, boolean flinvert,
+    public TankDriveSystem(PWMSparkMax frontLeft, boolean flinvert,
                         PWMSparkMax frontRight, boolean frinvert,
                         PWMSparkMax rearLeft, boolean rlinvert,
                         PWMSparkMax rearRight, boolean rrinvert) {
