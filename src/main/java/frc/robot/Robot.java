@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 import frc.robot.subsystems.DriverSystem;
-import frc.robot.commands.teleop.DriverCommand;
+import frc.robot.commands.teleop.TeleopDrive;
 
 /** This is a demo program showing how to use Mecanum control with the MecanumDrive class. */
 public class Robot extends TimedRobot {
@@ -39,7 +39,7 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().cancelAll();
 
     CommandScheduler.getInstance().schedule(
-      new DriverCommand(
+      new TeleopDrive(
         m_DriverSystem,
         () -> m_Controller.getVerticleOffset(), 
         () -> m_Controller.getRotation())

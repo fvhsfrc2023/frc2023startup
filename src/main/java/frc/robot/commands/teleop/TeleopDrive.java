@@ -7,12 +7,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.DriverSystem;
 
-public class DriverCommand extends CommandBase {
+public class TeleopDrive extends CommandBase {
     private final DriverSystem m_DriverSystem;
     private final Supplier<Double> getSpeed;
     private final Supplier<Double> getOffset;
 
-    public DriverCommand(DriverSystem driverSystem, Supplier<Double> getSpeed, Supplier<Double> getOffset) {
+    public TeleopDrive(DriverSystem driverSystem, Supplier<Double> getSpeed, Supplier<Double> getOffset) {
         this.m_DriverSystem = driverSystem;
         this.getSpeed = getSpeed;
         this.getOffset = getOffset;
