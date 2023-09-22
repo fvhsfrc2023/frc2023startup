@@ -64,13 +64,18 @@ public class DriveSystem extends SubsystemBase {
         }
     }
 
-    public void drive(double speed, double offset) {
-        double left_speed_coef = offset < 0 ? 1 - offset * -1 : 1;
-        double right_speed_coef = offset > 0 ? 1 - offset * 1 : 1;
+    public void drive(double vspeed, double hspeed, double rotation) {
+        double left_coef = rotation < 0 ? 1 + rotation : 1;
+        double right_coef = rotation > 0 ? 1 - rotation : 1;
 
-        m_FrontLeftMotor.set(speed * left_speed_coef);
-        m_RearLeftMotor.set(speed * left_speed_coef);
-        m_FrontRightMotor.set(speed * right_speed_coef);
-        m_RearRightMotor.set(speed * right_speed_coef);
+        double fl_speed = vspeed * left_coef - hspeed;
+        double rl_speed = vspeed * left_coef + hspeed;
+        double fr_speed = vspeed * right_coef + hspeed;
+        double rr_speed = vspeed * right_coef - hspeed;
+
+        m_FrontLeftMotor.set(Math.abs(fl_speed) > 1 ? Math.abs(fl_speed) / fl_speed : fl_speed);
+        m_FrontRightMotor.set(Math.abs(fr_speed) > 1 ? Math.abs(fr_speed) / fr_speed : fr_speed);
+        m_RearLeftMotor.set(Math.abs(rl_speed) > 1 ? Math.abs(rl_speed) / rl_speed : rl_speed);
+        m_RearRightMotor.set(Math.abs(rr_speed) > 1 ? Math.abs(rr_speed) / rr_speed : rr_speed);
     }
 }
