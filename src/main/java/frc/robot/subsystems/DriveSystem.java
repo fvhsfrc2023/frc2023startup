@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import java.sql.Blob;
+
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -65,17 +67,21 @@ public class DriveSystem extends SubsystemBase {
     }
 
     public void drive(double vspeed, double hspeed, double rotation) {
-        double left_coef = rotation < 0 ? 1 + rotation : 1;
-        double right_coef = rotation > 0 ? 1 - rotation : 1;
+        
+        double fLPower = vspeed + rotation + hspeed;
+        double fRPower = vspeed - rotation - hspeed;
+        double bLPower = vspeed + rotation - hspeed;
+        double bRPower = vspeed - rotation + hspeed;
 
-        double fl_speed = vspeed * left_coef - hspeed;
-        double rl_speed = vspeed * left_coef + hspeed;
-        double fr_speed = vspeed * right_coef + hspeed;
-        double rr_speed = vspeed * right_coef - hspeed;
+        double denominator = Math.max(Math.abs(vspeed) + Math.abs(rotation) + Math.abs(hspeed), 1);
+        fLPower /= denominator;
+        fRPower /= denominator;
+        bLPower /= denominator;
+        bRPower /= denominator;
+        m_FrontLeftMotor.set(fLPower);
+        m_FrontRightMotor.set(fRPower);
+        m_RearLeftMotor.set(bLPower);
+        m_RearRightMotor.set(bRPower);
 
-        m_FrontLeftMotor.set(Math.abs(fl_speed) > 1 ? Math.abs(fl_speed) / fl_speed : fl_speed);
-        m_FrontRightMotor.set(Math.abs(fr_speed) > 1 ? Math.abs(fr_speed) / fr_speed : fr_speed);
-        m_RearLeftMotor.set(Math.abs(rl_speed) > 1 ? Math.abs(rl_speed) / rl_speed : rl_speed);
-        m_RearRightMotor.set(Math.abs(rr_speed) > 1 ? Math.abs(rr_speed) / rr_speed : rr_speed);
     }
 }

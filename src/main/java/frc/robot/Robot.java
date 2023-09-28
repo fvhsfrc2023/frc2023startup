@@ -26,6 +26,8 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
+
+    m_Controller.putDebugInfo();
   }
 
   @Override
@@ -42,6 +44,7 @@ public class Robot extends TimedRobot {
       new TeleopDrive(
         m_DriverSystem,
         () -> m_Controller.getVerticleOffset(), 
+        () -> m_Controller.getHorizontalOffset(),
         () -> m_Controller.getRotation())
     );
   }
