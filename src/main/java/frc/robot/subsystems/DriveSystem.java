@@ -54,15 +54,10 @@ public class DriveSystem extends SubsystemBase {
     }
 
     public void drive(double vspeed, double hspeed, double rotation) {
-        double fl_speed = vspeed;
-        double rl_speed = vspeed;
-        double fr_speed = vspeed;
-        double rr_speed = vspeed;
-
-        fl_speed *= Math.abs(fl_speed);
-        rl_speed *= Math.abs(rl_speed);
-        fr_speed *= Math.abs(fr_speed);
-        rr_speed *= Math.abs(rr_speed);
+        double rl_speed = vspeed * Math.abs(vspeed);
+        double fr_speed = vspeed * Math.abs(vspeed);
+        double fl_speed = vspeed * Math.abs(vspeed);
+        double rr_speed = vspeed * Math.abs(vspeed);
 
         fl_speed *= Math.min(1, 2 * rotation + 1);
         rl_speed *= Math.min(1, 2 * rotation + 1);
