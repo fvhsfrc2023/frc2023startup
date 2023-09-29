@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
@@ -19,30 +20,18 @@ public class DriveSystem extends SubsystemBase {
         RearRight
     }
 
-
-    public DriveSystem() {
-        this(
-            new PWMSparkMax(Constants.Motors.kFrontLeftChannel), Constants.Motors.bFrontLeftInverted,
-            new PWMSparkMax(Constants.Motors.kFrontRightChannel), Constants.Motors.bFrontRightInverted,
-            new PWMSparkMax(Constants.Motors.kRearLeftChannel), Constants.Motors.bRearLeftInverted,
-            new PWMSparkMax(Constants.Motors.kRearRightChannel), Constants.Motors.bRearRightInverted
-        );
-    }
     
-    public DriveSystem(PWMSparkMax frontLeft, boolean flinvert,
-                        PWMSparkMax frontRight, boolean frinvert,
-                        PWMSparkMax rearLeft, boolean rlinvert,
-                        PWMSparkMax rearRight, boolean rrinvert) {
+    public DriveSystem() {
         
-        m_FrontLeftMotor = frontLeft;
-        m_FrontRightMotor = frontRight;
-        m_RearLeftMotor = rearLeft;
-        m_RearRightMotor = rearRight;
+        m_FrontLeftMotor = new PWMSparkMax(Constants.Motors.kFrontLeftChannel);
+        m_FrontRightMotor = new PWMSparkMax(Constants.Motors.kFrontRightChannel);
+        m_RearLeftMotor = new PWMSparkMax(Constants.Motors.kRearLeftChannel);
+        m_RearRightMotor = new PWMSparkMax(Constants.Motors.kRearRightChannel);
 
-        m_FrontLeftMotor.setInverted(flinvert);
-        m_FrontRightMotor.setInverted(frinvert);
-        m_RearLeftMotor.setInverted(rlinvert);
-        m_RearRightMotor.setInverted(rrinvert);
+        m_FrontLeftMotor.setInverted(Constants.Motors.bFrontLeftInverted);
+        m_FrontRightMotor.setInverted(Constants.Motors.bFrontRightInverted);
+        m_RearLeftMotor.setInverted(Constants.Motors.bRearLeftInverted);
+        m_RearRightMotor.setInverted(Constants.Motors.bRearRightInverted);
     }
 
     @Override
@@ -65,17 +54,29 @@ public class DriveSystem extends SubsystemBase {
     }
 
     public void drive(double vspeed, double hspeed, double rotation) {
-        double left_coef = rotation < 0 ? 1 + rotation : 1;
-        double right_coef = rotation > 0 ? 1 - rotation : 1;
+        double fl_speed = vspeed;
+        double rl_speed = vspeed;
+        double fr_speed = vspeed;
+        double rr_speed = vspeed;
 
-        double fl_speed = vspeed * left_coef - hspeed;
-        double rl_speed = vspeed * left_coef + hspeed;
-        double fr_speed = vspeed * right_coef + hspeed;
-        double rr_speed = vspeed * right_coef - hspeed;
+        fl_speed *= Math.abs(fl_speed);
+        rl_speed *= Math.abs(rl_speed);
+        fr_speed *= Math.abs(fr_speed);
+        rr_speed *= Math.abs(rr_speed);
 
-        m_FrontLeftMotor.set(Math.abs(fl_speed) > 1 ? Math.abs(fl_speed) / fl_speed : fl_speed);
-        m_FrontRightMotor.set(Math.abs(fr_speed) > 1 ? Math.abs(fr_speed) / fr_speed : fr_speed);
-        m_RearLeftMotor.set(Math.abs(rl_speed) > 1 ? Math.abs(rl_speed) / rl_speed : rl_speed);
-        m_RearRightMotor.set(Math.abs(rr_speed) > 1 ? Math.abs(rr_speed) / rr_speed : rr_speed);
+        fl_speed *= Math.min(1, 2 * rotation + 1);
+        rl_speed *= Math.min(1, 2 * rotation + 1);
+        fr_speed *= Math.min(1, -2 * rotation + 1);
+        rr_speed *= Math.min(1, -2 * rotation + 1);
+
+        fl_speed += -hspeed * Math.abs(hspeed);
+        rl_speed += hspeed * Math.abs(hspeed);
+        fr_speed += hspeed * Math.abs(hspeed);
+        rr_speed += -hspeed * Math.abs(hspeed);
+
+        m_FrontLeftMotor.set(fl_speed);
+        m_RearLeftMotor.set(rl_speed);
+        m_FrontRightMotor.set(fr_speed);
+        m_RearRightMotor.set(rr_speed);
     }
 }
