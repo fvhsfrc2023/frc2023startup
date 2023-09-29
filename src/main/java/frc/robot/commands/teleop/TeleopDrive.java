@@ -10,12 +10,14 @@ import frc.robot.subsystems.DriveSystem;
 public class TeleopDrive extends CommandBase {
     private final DriveSystem m_DriverSystem;
     private final Supplier<Double> getSpeed;
-    private final Supplier<Double> getOffset;
+    private final Supplier<Double> getHSpeed;
+    private final Supplier<Double> getRotation;
 
-    public TeleopDrive(DriveSystem driverSystem, Supplier<Double> getSpeed, Supplier<Double> getOffset) {
+    public TeleopDrive(DriveSystem driverSystem, Supplier<Double> getSpeed, Supplier<Double> getHspeed, Supplier<Double> getRotation) {
         this.m_DriverSystem = driverSystem;
         this.getSpeed = getSpeed;
-        this.getOffset = getOffset;
+        this.getHSpeed = getHspeed;
+        this.getRotation = getRotation;
 
         addRequirements(m_DriverSystem);
     }
@@ -27,10 +29,10 @@ public class TeleopDrive extends CommandBase {
 
     @Override
     public void execute() {
-        m_DriverSystem.drive(getSpeed.get(), 0, getOffset.get());
+        m_DriverSystem.drive(getSpeed.get(), getHSpeed.get(), getRotation.get());
 
         SmartDashboard.putNumber("getSpeed", getSpeed.get());
-        SmartDashboard.putNumber("getOffset", getOffset.get());
+        SmartDashboard.putNumber("getOffset", getRotation.get());
     }
 
     @Override
