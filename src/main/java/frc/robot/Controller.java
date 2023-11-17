@@ -27,10 +27,10 @@ public class Controller {
     }
 
     public double getHorizontalOffset() {
-        return Math.abs(m_Joystick.getX()) > Constants.Joystick.fYDeadZone ? m_Joystick.getX() : 0;
+        return Math.abs(m_Joystick.getX()) > Constants.Joystick.fXDeadZone ? m_Joystick.getX() : 0;
     }
 
     public double getRotation() {
-        return Math.abs(m_Joystick.getZ()) > Constants.Joystick.fYDeadZone ? m_Joystick.getZ() : 0;
+        return Math.abs(m_Joystick.getZ()) > Constants.Joystick.fZDeadZone ? m_Joystick.getZ() : 0;
     }
 }
