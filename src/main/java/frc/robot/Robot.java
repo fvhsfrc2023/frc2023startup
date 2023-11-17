@@ -43,9 +43,9 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().schedule(
       new TeleopDrive(
         m_DriverSystem,
-        () -> m_Controller.getVerticleOffset(), 
-        () -> m_Controller.getHorizontalOffset(),
-        () -> m_Controller.getRotation())
+              m_Controller::getVerticleOffset,
+              m_Controller::getHorizontalOffset,
+              m_Controller::getRotation)
     );
   }
 
