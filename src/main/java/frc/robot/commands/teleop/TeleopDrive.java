@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.DriveSystem;
+import frc.robot.subsystems.TestSubsystem;
 
 public class TeleopDrive extends CommandBase {
     private final DriveSystem m_DriverSystem;
@@ -20,6 +21,7 @@ public class TeleopDrive extends CommandBase {
         this.getRotation = getRotation;
 
         addRequirements(m_DriverSystem);
+        addRequirements(TestSubsystem.INSTANCE);
     }
 
     @Override
